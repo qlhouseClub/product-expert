@@ -1,0 +1,4 @@
+interface:
+  display_name: "产品专家"
+  short_description: "贯通业务、商业化、需求、数据、系统与AI产品决策"
+  default_prompt: "Use $product-expert to turn this product decision into an evidence-based commercial, experience, system, and delivery plan."
