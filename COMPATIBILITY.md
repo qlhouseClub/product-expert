@@ -32,15 +32,27 @@ python .\scripts\build_compat.py --platform portable
 
 脚本在生成前会检查技能名称与本地引用链接。`dist/` 已被 Git 忽略，可随时重建。
 
+正式版本会通过 GitHub Release 提供 TRAE、OpenAI Plugin、扣子和便携 ZIP。Release 产物由版本标签触发自动构建，不手工修改。
+
 ## Codex 与 ChatGPT
 
 ### 个人技能
 
-当前 Codex 与 ChatGPT 桌面端使用开放 Agent Skills 结构，可将仓库克隆到个人技能目录：
+Codex 可将仓库克隆到个人技能目录。
 
 ```powershell
-git clone https://github.com/qlhouseClub/product-expert.git "$env:USERPROFILE\.agents\skills\product-expert"
+$skillDir = "$env:USERPROFILE\.codex\skills\product-expert"
+New-Item -ItemType Directory -Force (Split-Path $skillDir) | Out-Null
+git clone https://github.com/qlhouseClub/product-expert.git $skillDir
 ```
+
+```bash
+skill_dir="$HOME/.codex/skills/product-expert"
+mkdir -p "$(dirname "$skill_dir")"
+git clone https://github.com/qlhouseClub/product-expert.git "$skill_dir"
+```
+
+需要多个兼容 Agent 共享时，可以使用 `~/.agents/skills/product-expert/`。
 
 ### ChatGPT Work / 团队分发
 
@@ -48,8 +60,10 @@ git clone https://github.com/qlhouseClub/product-expert.git "$env:USERPROFILE\.a
 
 ```powershell
 python .\scripts\build_compat.py --platform openai
-codex plugin marketplace add .\dist\openai-marketplace
+codex.cmd plugin marketplace add .\dist\openai-marketplace
 ```
+
+macOS / Linux 使用 `codex plugin marketplace add ./dist/openai-marketplace`。
 
 重启 ChatGPT 桌面端，在 Plugins 中安装“产品专家”。需要团队使用时，可从插件详情页分享到 ChatGPT 工作区。生成的单插件压缩包位于 `dist/openai/product-expert-plugin.zip`。
 
@@ -95,10 +109,10 @@ OpenClaw 可从 Git 仓库安装根目录包含 `SKILL.md` 的技能：
 openclaw skills install git:qlhouseClub/product-expert@main
 ```
 
-也可以在本地仓库目录执行：
+也可以在已克隆的仓库根目录执行：
 
-```powershell
-openclaw skills install 'E:\product-expert' --as product-expert
+```text
+openclaw skills install . --as product-expert
 ```
 
 默认安装到当前工作区的 `skills/`；需要所有本地 Agent 共享时使用 `--global`。私有 Git 仓库同样需要可用的 GitHub 凭据。
