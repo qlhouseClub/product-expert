@@ -35,30 +35,39 @@
 product-expert/
 ├── SKILL.md                  # 主入口、模式路由和质量门槛
 ├── agents/openai.yaml        # Codex 界面元数据
-└── references/               # 按任务需要加载的专业模块
-    ├── first-principles-and-business.md
-    ├── commercialization-and-growth.md
-    ├── discovery-and-requirements.md
-    ├── planning-and-validation.md
-    ├── product-analytics-and-experiments.md
-    ├── data-and-architecture.md
-    ├── organization-and-product-ops.md
-    ├── delivery-and-governance.md
-    ├── product-judgment-and-continuity.md
-    ├── ai-product-extension.md
-    ├── ai-context-and-agents.md
-    └── artifact-templates.md
+├── references/               # 按任务需要加载的专业模块
+│   ├── first-principles-and-business.md
+│   ├── commercialization-and-growth.md
+│   ├── discovery-and-requirements.md
+│   ├── planning-and-validation.md
+│   ├── product-analytics-and-experiments.md
+│   ├── data-and-architecture.md
+│   ├── organization-and-product-ops.md
+│   ├── delivery-and-governance.md
+│   ├── product-judgment-and-continuity.md
+│   ├── ai-product-extension.md
+│   ├── ai-context-and-agents.md
+│   └── artifact-templates.md
+├── platforms/                # 跨平台元数据与扣子桥接提示词
+├── scripts/build_compat.py   # 生成 TRAE、OpenAI Plugin、扣子和便携包
+└── COMPATIBILITY.md          # 跨平台安装、限制与维护规则
 ```
 
 ## 安装
 
-将仓库克隆或复制到 Codex 技能目录：
+将仓库克隆或复制到 Codex / ChatGPT 桌面端个人技能目录：
 
 ```powershell
-git clone https://github.com/qlhouseClub/product-expert.git "$env:USERPROFILE\.codex\skills\product-expert"
+git clone https://github.com/qlhouseClub/product-expert.git "$env:USERPROFILE\.agents\skills\product-expert"
 ```
 
 重启或刷新 Codex 后，即可通过自然语言触发技能。
+
+## 跨平台兼容
+
+仓库同时适配 Codex、ChatGPT、TRAE Work、Hermes、OpenClaw 和扣子。Codex、TRAE、Hermes 与 OpenClaw 复用开放的 `SKILL.md` 结构；ChatGPT Work 使用生成的 Plugin；扣子使用系统提示词与知识库转换层。
+
+完整安装方法、平台边界和生成命令见 [COMPATIBILITY.md](COMPATIBILITY.md)。
 
 ## 使用示例
 
@@ -83,3 +92,4 @@ git clone https://github.com/qlhouseClub/product-expert.git "$env:USERPROFILE\.c
 - YAML 元数据校验通过
 - 本地引用链接校验通过
 - 已进行跨商业化、AI、数据和组织协同的前向测试
+- 已生成并校验 TRAE、OpenAI Plugin、扣子和便携适配产物
